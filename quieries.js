@@ -1,19 +1,9 @@
 
-//import dependencies
 
-// this is used for input
-const inquirer = require('inquirer');
 //  this handles the databases
 const mysql = require('mysql2');
-// this writes to file systems
-const fs = require('fs');
-
-require('dotenv').config()
-
-
 
 const PORT = process.env.PORT || 3001;
-
 
 // connect to database
 const db = mysql.createConnection(
@@ -27,7 +17,6 @@ const db = mysql.createConnection(
     },
     console.log('Connected to the big company database')
 );
- 
 
 // assign all functions into an object for earsier access and clean organization
 let actions = {
@@ -78,58 +67,4 @@ let actions = {
 };
 
 
-const menuOptions = [
-    {
-        type: 'list',
-        message: 'what would you like to do?',
-        name: 'task',
-        choices: ['View all employees by department', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Udpate an employee role']
-    }
-];
-
-inquirer.prompt([
-    ...menuOptions
-    
-])
-.then((answers) => {
-    const answer = answers.task;
-    console.log(answers);
-    console.log(answers.task)
-    switch (answer) {
-        case 'View all employees by department':
-            console.log('case 1');
-            actions.viewDepartments();
-            break;
-        
-        case 'View all roles':
-            console.log('case 2');
-            actions.viewRoles();
-            break;
-            
-        case 'View all employees':
-            console.log('case 3');
-            actions.viewEmployees();
-            break;
-        case 'Add a department': 
-            actions.addDepartmnet();
-            break;
-
-        case 'Add a role':
-            actions.addRole();
-            break;
-
-        case 'Add an employee': 
-            actions.addEmployee();
-            break;
-
-        case 'Udpate an employee role':
-            actions.updateEmployee();
-            break;
-    };
-});
-
-
-
-
-
-
+module.exports = actions;
