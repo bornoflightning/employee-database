@@ -9,10 +9,7 @@ const fs = require('fs');
 
 require('dotenv').config()
 
-
-
 const PORT = process.env.PORT || 3001;
-
 
 // connect to database
 const db = mysql.createConnection(
@@ -27,7 +24,6 @@ const db = mysql.createConnection(
     console.log('Connected to the big company database')
 );
  
-
 
 // assign all functions into an object for earsier access and clean organization
 let actions = {
@@ -137,7 +133,7 @@ const menuOptions = [
         type: 'list',
         message: 'what would you like to do?',
         name: 'task',
-        choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Udpate an employee role', 'Test function', '\n']
+        choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Udpate an employee role', '\n']
     }
 ];
 
@@ -307,9 +303,5 @@ function updateEmployee() {
 };
     
 
-
-
-
-
-
+// initialize
 menu();
