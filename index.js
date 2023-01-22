@@ -27,7 +27,7 @@ const db = mysql.createConnection(
     console.log('Connected to the big company database')
 );
  
-const currentEmployees =  JSON.stringify(db.query('SELECT first_name AS employee FROM employee'))
+
 
 // assign all functions into an object for earsier access and clean organization
 let actions = {
@@ -198,28 +198,23 @@ const employeeQuestions = [
     
 ];
 
-const updateQuestions = [
-    // {
-    //     type: 'list',
-    //     message: 'if the employee has a manager, please provide the id, otherwise choose 0',
-    //     name: 'manager_id',
-    //     choices: []
-    // },
-    {
-        message: "What is the name of the employee you would like to update?",
-        type: 'list',
-        name: 'name',
-        choices: 
-    },
-    {
-        message: "What is the new role this employee will have?",
-        type: 'list',
-        name: 'role_id',
-        choices: 
+// const updateQuestions = [
+    
+//     {
+//         message: "What is the name of the employee you would like to update?",
+//         type: 'list',
+//         name: 'name',
+//         choices: []
+//     },
+//     {
+//         message: "What is the new role this employee will have?",
+//         type: 'list',
+//         name: 'role_id',
+//         choices: [];
 
-    }
+//     }
 
-];
+// ];
 
 
 function menu() { 
