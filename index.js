@@ -27,9 +27,11 @@ const db = mysql.createConnection(
     console.log('Connected to the big company database')
 );
  
+const currentEmployees =  JSON.stringify(db.query('SELECT first_name AS employee FROM employee'))
 
 // assign all functions into an object for earsier access and clean organization
 let actions = {
+
     // this function has been added to make code dry, and avoid repetition
     dryQuery: function(query) {
         db.query(query, function (err, results){
@@ -58,7 +60,8 @@ let actions = {
                 console.log(" ");
                 console.log("lets try that again.")
             } else {
-                console.table('your input has been succesfully added!');
+                console.table(results);
+                console.log('your input has been succesfully added!');
             };
         });
         console.log('--------------------------------------------');
@@ -100,13 +103,15 @@ let actions = {
         this.dryInsert(query);
     },
 
-    addEmployee: function(first_name, last_name, role_id, manager_id) {
-        db.query(`INSERT INTO employee (title, salary, department_id) VALUES ("${first_name}","${last_name}",${role_id},${manager_id})`, function(err, results) {
-            console.log(results);
-        });
+    addEmployee: function(first_name, last_name, role_id, manager_id,) {
+        const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${first_name}","${last_name}", ${role_id}, ${manager_id})`;
+        this.dryInsert(query);
+        
     },
 
-    updateEmployee: function() {
+    updateEmployee: async function() {
+      
+
 
     },
     // this function is used once to reference the Role table and display the id 
@@ -132,7 +137,7 @@ const menuOptions = [
         type: 'list',
         message: 'what would you like to do?',
         name: 'task',
-        choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Udpate an employee role \n']
+        choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Udpate an employee role', 'Test function', '\n']
     }
 ];
 
@@ -184,11 +189,38 @@ const employeeQuestions = [
         name: 'role_id',
     },
     {
-        type: 'input',
-        message: 'please provide the id for the manager this employee will report to',
+        type: 'list',
+        message: 'if the employee has a manager, please provide the id, otherwise choose 0',
         name: 'manager_id',
-    }
+        choices: [1, 3, 5, 0]
+    },
+    
+    
 ];
+
+const updateQuestions = [
+    // {
+    //     type: 'list',
+    //     message: 'if the employee has a manager, please provide the id, otherwise choose 0',
+    //     name: 'manager_id',
+    //     choices: []
+    // },
+    {
+        message: "What is the name of the employee you would like to update?",
+        type: 'list',
+        name: 'name',
+        choices: 
+    },
+    {
+        message: "What is the new role this employee will have?",
+        type: 'list',
+        name: 'role_id',
+        choices: 
+
+    }
+
+];
+
 
 function menu() { 
     inquirer.prompt([
@@ -199,7 +231,8 @@ function menu() {
         const answer = answers.task;
         console.log(answers);
         console.log(answers.task)
-        switch (answer) {
+        switch (answer) {                
+
             case 'View all departments':
                 actions.viewDepartments();
                 break;
@@ -223,11 +256,11 @@ function menu() {
                 addNewEmployee()
                 break;
 
-            case 'Udpate an employee role':
-                actions.updateEmployee();
+            default:
                 break;
 
-            default:
+            
+                
         };
     })
     
@@ -270,6 +303,12 @@ function addNewEmployee() {
         const {first_name, last_name, role_id, manager_id} = answers;
         actions.addEmployee(first_name, last_name, role_id, manager_id);
     });
+};
+
+function updateEmployee() {
+    inquirer.prompt([
+        ...updateQuestions
+    ])
 };
     
 
